@@ -16,6 +16,7 @@ bot.on('ready', () => {
     bot.generateInvite([522304]).then(link => {
         console.log(link);
     });
+    bot.user.setActivity(prefix + "tr help", { type: "LISTENING" });
 });
 
 bot.on('message', async(msg) => {
@@ -36,6 +37,14 @@ bot.on('message', async(msg) => {
         if (msg_str.startsWith(prefix + 'traon')) { enableAutoTranslate(msg.guild.id, msg.author.id, msg.channel.id) }
         if (msg_str.startsWith(prefix + 'traoff')) { disabledAutoTranslate(msg.guild.id, msg.author.id, msg.channel.id) }
         if (msg_str === prefix + 'ping') { msg.reply('pong!') }
+        if (msg_str.startsWith(prefix + 'tr help')) {
+            msg.reply("\n```" +
+                prefix + "tr help - this command\n" +
+                prefix + "tra languages - example /tra en,fr, add selected languages to auto translate\n" +
+                prefix + "traon - enable auto translate\n" +
+                prefix + "traoff - disable auto translate\n" +
+                prefix + "ping - pong```\n");
+        }
     } else {
         (async() => {
             const lang_arr = await getLangsForTranslate(msg.guild.id, msg.author.id, msg.channel.id);
